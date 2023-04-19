@@ -36,7 +36,7 @@ class ResponsiveTwoColumnLayout extends StatelessWidget {
           mainAxisAlignment: rowMainAxisAlignment,
           crossAxisAlignment: rowCrossAxisAlignment,
           children: [
-            Flexible(flex: startFlex, child: startContent),
+            Flexible(flex: 3, child: startContent),
             SizedBox(width: spacing),
             Flexible(flex: endFlex, child: endContent),
           ],
