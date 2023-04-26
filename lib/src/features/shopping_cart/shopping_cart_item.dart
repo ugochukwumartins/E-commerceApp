@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:ecommerce_app/src/common_widgets/alert_dialogs.dart';
 import 'package:ecommerce_app/src/constants/test_products.dart';
+import 'package:ecommerce_app/src/features/account/data_layer/product_repository.darr';
 import 'package:ecommerce_app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/src/common_widgets/custom_image.dart';
@@ -31,8 +32,8 @@ class ShoppingCartItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: Read from data source
-    final product =
-        kTestProducts.firstWhere((product) => product.id == item.productId);
+    final product = ProductRepo.instance.findProduct(item.productId)!;
+    //  kTestProducts.firstWhere((product) => product.id == item.productId);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: Sizes.p8),
       child: Card(
