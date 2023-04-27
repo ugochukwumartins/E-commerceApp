@@ -1,5 +1,5 @@
 import 'package:ecommerce_app/src/constants/test_products.dart';
-import 'package:ecommerce_app/src/features/data_layer/product_repository.darr';
+import 'package:ecommerce_app/src/data_layer/product_repository.darr';
 import 'package:ecommerce_app/src/localization/string_hardcoded.dart';
 import 'package:ecommerce_app/src/utils/currency_formatter.dart';
 import 'package:flutter/material.dart';
