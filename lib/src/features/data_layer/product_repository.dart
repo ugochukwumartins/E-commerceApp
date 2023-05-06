@@ -1,12 +1,13 @@
 import 'package:ecommerce_app/src/constants/test_products.dart';
 import 'package:ecommerce_app/src/models/product.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ProductRepo {
   //making the constructor private
-  ProductRepo._();
+//   ProductRepo._();
 
-// making the constructor singleton
-  static ProductRepo instance = ProductRepo._();
+// // making the constructor singleton
+//   static ProductRepo instance = ProductRepo._();
 
   final List<Product> _product = kTestProducts;
 
@@ -32,3 +33,7 @@ class ProductRepo {
     return watchProductList().map((products)=> products.firstWhere((product) => product.id == id));
   }
 }
+
+final productsRepositortProvider = Provider<ProductRepo>((ref) {
+  return ProductRepo();
+});

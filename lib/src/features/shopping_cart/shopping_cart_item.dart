@@ -12,10 +12,11 @@ import 'package:ecommerce_app/src/common_widgets/responsive_two_column_layout.da
 import 'package:ecommerce_app/src/constants/app_sizes.dart';
 import 'package:ecommerce_app/src/models/item.dart';
 import 'package:ecommerce_app/src/models/product.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 /// Shows a shopping cart item (or loading/error UI if needed)
-class ShoppingCartItem extends StatelessWidget {
+class ShoppingCartItem extends ConsumerWidget {
   const ShoppingCartItem({
     super.key,
     required this.item,
@@ -31,9 +32,9 @@ class ShoppingCartItem extends StatelessWidget {
   final bool isEditable;
 
   @override
-  Widget build(BuildContext context) {
-    // TODO: Read from data source
-    final product = ProductRepo.instance.findProduct(item.productId)!;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final productrepo = ref.watch(productsRepositortProvider);
+    final product = productrepo.findProduct(item.productId)!;
     //  kTestProducts.firstWhere((product) => product.id == item.productId);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: Sizes.p8),

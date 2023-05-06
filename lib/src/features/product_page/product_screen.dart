@@ -15,16 +15,17 @@ import 'package:ecommerce_app/src/features/product_page/leave_review_action.dart
 import 'package:ecommerce_app/src/features/product_page/product_average_rating.dart';
 import 'package:ecommerce_app/src/features/product_page/product_reviews/product_reviews_list.dart';
 import 'package:ecommerce_app/src/models/product.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Shows the product page for a given product ID.
-class ProductScreen extends StatelessWidget {
+class ProductScreen extends ConsumerWidget {
   const ProductScreen({super.key, required this.productId});
   final String productId;
 
   @override
-  Widget build(BuildContext context) {
-    // TODO: Read from data source
-    final product = ProductRepo.instance.findProduct(productId);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final productrepo = ref.watch(productsRepositortProvider);
+    final product = productrepo.findProduct(productId);
     // kTestProducts.firstWhere((product) => product.id == productId);
     return Scaffold(
       appBar: const HomeAppBar(),
