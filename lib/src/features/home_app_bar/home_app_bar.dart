@@ -20,7 +20,7 @@ import 'package:go_router/go_router.dart';
 /// - [ShoppingCartIcon]
 /// - Orders button
 /// - Account or Sign-in button
-class HomeAppBar extends ConsumerWidget with PreferredSizeWidget {
+class HomeAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const HomeAppBar({super.key});
 
   @override
@@ -35,7 +35,7 @@ class HomeAppBar extends ConsumerWidget with PreferredSizeWidget {
     // ! MediaQuery is used on the assumption that the widget takes up the full
     // ! width of the screen. If that's not the case, LayoutBuilder should be
     // ! used instead.
-    final screenWidth = MediaQuery.of(context).size.width;
+    final screenWidth = MediaQuery.sizeOf(context).width;
     if (screenWidth < Breakpoint.tablet) {
       return AppBar(
         title: Text('My Shop'.hardcoded),

@@ -68,6 +68,7 @@ class ShoppingCartIconBadge extends StatelessWidget {
               .caption!
               .copyWith(color: Colors.white),
         ),
+        
       ),
     );
   }
