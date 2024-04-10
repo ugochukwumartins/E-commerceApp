@@ -27,13 +27,13 @@ class FakeAuthRepository {
   }
 }
 
-final authRepositoryProvider = Provider.autoDispose<FakeAuthRepository>((ref) {
+final authRepositoryProvider = Provider<FakeAuthRepository>((ref) {
   final auth = FakeAuthRepository();
   ref.onDispose(() => auth._authState.close());
   return auth;
 });
 final authStateChangesRepositoryProvider =
-    StreamProvider.autoDispose<AppUser?>((ref) {
+    StreamProvider<AppUser?>((ref) {
   final authrepo = ref.watch(authRepositoryProvider).authSateChanges();
   return authrepo;
 });

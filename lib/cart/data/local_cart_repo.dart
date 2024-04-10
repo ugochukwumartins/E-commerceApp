@@ -20,3 +20,6 @@ abstract class RemoteCartRepository {
 
   Future<void> setCart(String uid, Cart cart);
 }
+final remoteCartRepoProvider = Provider<RemoteCartRepository>((ref) {
+  throw UnimplementedError();
+});

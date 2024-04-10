@@ -42,7 +42,7 @@ class LeaveReviewAction extends StatelessWidget {
                   .bodyText1!
                   .copyWith(color: Colors.green[700]),
               onPressed: () => context.goNamed(AppRoute.leaveReview.name,
-                  params: {'id': productId}),
+                  pathParameters: {'id': productId}),
               //  Navigator.of(context).push(
               //   MaterialPageRoute(
               //     fullscreenDialog: true,
