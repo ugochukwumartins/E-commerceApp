@@ -11,7 +11,7 @@ class Cart {
   /// All the items in the shopping cart, where:
   /// - key: product ID
   /// - value: quantity
-  final Map<ProductID, int> items;
+  final Map<ProductID, dynamic> items;
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -21,8 +21,8 @@ class Cart {
 
   factory Cart.fromMap(Map<String, dynamic> map) {
     return Cart(
-      Map<ProductID, int>.from(
-        (map['items'] as Map<ProductID, int>),
+      Map<ProductID, dynamic>.from(
+        (map['items'] as Map<ProductID, dynamic>),
       ),
     );
   }

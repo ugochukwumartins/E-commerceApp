@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:ecommerce_app/src/common_widgets/alert_dialogs.dart';
 import 'package:ecommerce_app/src/constants/test_products.dart';
 import 'package:ecommerce_app/src/features/data_layer/product_repository.dart';
+import 'package:ecommerce_app/src/features/shopping_cart/shoping_cart_screen_contoller.dart';
 
 import 'package:ecommerce_app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +55,7 @@ class ShoppingCartItem extends ConsumerWidget {
 }
 
 /// Shows a shopping cart item for a given product
-class ShoppingCartItemContents extends StatelessWidget {
+class ShoppingCartItemContents extends ConsumerWidget {
   const ShoppingCartItemContents({
     super.key,
     required this.product,
@@ -71,8 +72,8 @@ class ShoppingCartItemContents extends StatelessWidget {
   static Key deleteKey(int index) => Key('delete-$index');
 
   @override
-  Widget build(BuildContext context) {
-    // TODO: error handling
+  Widget build(BuildContext context, ref) {
+    final state = ref.watch(shopingCartScreenController);
     // TODO: Inject formatter
     final priceFormatted = NumberFormat.simpleCurrency().format(product.price);
     return ResponsiveTwoColumnLayout(
@@ -98,17 +99,21 @@ class ShoppingCartItemContents extends StatelessWidget {
                       maxQuantity: min(product.availableQuantity, 10),
                       itemIndex: itemIndex,
                       // TODO: Implement onChanged
-                      onChanged: (value) {
-                        showNotImplementedAlertDialog(context: context);
-                      },
+                        onChanged: state.isLoading
+                            ? null
+                            : (quantity) => ref
+                                .read(shopingCartScreenController.notifier)
+                                .updateItemQuantity(item.productId, quantity)
                     ),
                     IconButton(
                       key: deleteKey(itemIndex),
                       icon: Icon(Icons.delete, color: Colors.red[700]),
                       // TODO: Implement onPressed
-                      onPressed: () {
-                        showNotImplementedAlertDialog(context: context);
-                      },
+                        onPressed: state.isLoading
+                            ? null
+                            : () => ref
+                                .read(shopingCartScreenController.notifier)
+                                .removeItemById(item.productId)
                     ),
                     const Spacer(),
                   ],

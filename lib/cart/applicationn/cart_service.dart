@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/cart/data/local_cart_repo.dart';
 import 'package:ecommerce_app/cart/mutable_cart.dart';
 import 'package:ecommerce_app/src/auth/data/fake_auth_repo.dart';
+import 'package:ecommerce_app/src/features/data_layer/product_repository.dart';
 import 'package:ecommerce_app/src/models/cart.dart';
 import 'package:ecommerce_app/src/models/item.dart';
 import 'package:ecommerce_app/src/models/product.dart';
@@ -61,4 +62,29 @@ final cartProvider = StreamProvider<Cart>((ref) {
   } else {
     return ref.watch(localCartRepoProvider).watchCart();
   }
+});
+final cartItemCount = Provider<int>((ref) {
+  return ref
+      .watch(cartProvider)
+      .maybeMap(data: (cart) => cart.value.items.length, orElse: () => 0);
+  // return cartValue.maybeWhen(
+  //     data: (cart) => cart.items.length, orElse: () => 0);
+});
+final cartTotalProvider = Provider<double>((ref) {
+  final cart = ref.watch(cartProvider).value ?? const Cart();
+  final productsList =
+      ref.watch(productsRepositortProvider).getProductList() ?? [];
+
+  if (cart.items.isNotEmpty && productsList.isNotEmpty) {
+    var total = 0.0;
+    for (final item in cart.items.entries) {
+      final product =
+          productsList.firstWhere((product) => product.id == item.key);
+      total += product.price * item.value;
+    }
+    return total;
+  } else {
+    return 0.0;
+  }
+  //     data: (cart) => cart.items.length, orElse: () => 0);
 });
