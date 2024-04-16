@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:ecommerce_app/cart/data/local_cart_repo.dart';
 import 'package:ecommerce_app/cart/mutable_cart.dart';
 import 'package:ecommerce_app/src/auth/data/fake_auth_repo.dart';
@@ -87,4 +89,15 @@ final cartTotalProvider = Provider<double>((ref) {
     return 0.0;
   }
   //     data: (cart) => cart.items.length, orElse: () => 0);
+});
+final itemAvailableQuantityProvider =
+    Provider.autoDispose.family<int, Product>((ref, product) {
+  final cart = ref.watch(cartProvider).value;
+
+  if (cart != null) {
+    int quantity = cart.items[product.id] ?? 0;
+    return max(0, product.availableQuantity - quantity);
+  } else {
+    return product.availableQuantity;
+  }
 });
