@@ -1,8 +1,10 @@
+import 'package:ecommerce_app/src/auth/data/fake_auth_repo.dart';
 import 'package:ecommerce_app/src/features/sign_in/email_password_sign_in_state.dart';
 import 'package:ecommerce_app/src/localization/string_hardcoded.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/src/features/checkout/payment/payment_page.dart';
 import 'package:ecommerce_app/src/features/sign_in/email_password_sign_in_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// The two sub-routes that are presented as part of the checkout flow.
 /// TODO: add the address page as well (see [AddressScreen]).
@@ -16,18 +18,32 @@ enum CheckoutSubRoute { register, payment }
 /// The logic for the entire flow is implemented in the
 /// [CheckoutScreenController], while UI updates are handled by a
 /// [PageController].
-class CheckoutScreen extends StatefulWidget {
+class CheckoutScreen extends ConsumerStatefulWidget {
   const CheckoutScreen({super.key});
 
   @override
-  State<CheckoutScreen> createState() => _CheckoutScreenState();
+  ConsumerState<CheckoutScreen> createState() => _CheckoutScreenState();
 }
 
-class _CheckoutScreenState extends State<CheckoutScreen> {
-  final _controller = PageController();
+class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
+  late final PageController _controller;
 
   var _subRoute = CheckoutSubRoute.register;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    final userState = ref.read(authRepositoryProvider).currenntUser;
+    if (userState != null) {
+      setState(() {
+        _subRoute == CheckoutSubRoute.payment;
+        _onSignedIn();
+      });
+    }
+    _controller = PageController(initialPage: _subRoute.index);
+  }
   @override
   void dispose() {
     _controller.dispose();

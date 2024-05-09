@@ -29,7 +29,7 @@ class CartService {
     if (user != null) {
       ref.read(remoteCartRepoProvider).setCart(user.uid, cart);
     } else {
-      ref.read(localCartRepoProvider)..setCart(cart);
+      ref.read(localCartRepoProvider).setCart(cart);
     }
   }
 

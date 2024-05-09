@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/cart/data/fake_remote_cart.dart';
 import 'package:ecommerce_app/src/models/cart.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -21,5 +22,5 @@ abstract class RemoteCartRepository {
   Future<void> setCart(String uid, Cart cart);
 }
 final remoteCartRepoProvider = Provider<RemoteCartRepository>((ref) {
-  throw UnimplementedError();
+  return FakeRemoteCartRepository(addDelay: false);
 });

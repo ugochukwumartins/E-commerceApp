@@ -39,6 +39,7 @@
 import 'package:ecommerce_app/cart/data/local_cart_repo.dart';
 import 'package:ecommerce_app/cart/data/sembast_cartRepo.dart';
 import 'package:ecommerce_app/src/app.dart';
+import 'package:ecommerce_app/src/features/product_page/add_to_cart/cart_sync_service.dart';
 import 'package:ecommerce_app/src/localization/string_hardcoded.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -54,11 +55,15 @@ void main() async {
   // * Register error handlers. For more info, see:
   // * https://docs.flutter.dev/testing/errors
   registerErrorHandlers();
-
   final localCartRepo = await SembastCartRepo.makeDefault();
-  // * Entry point of the app
-  runApp(ProviderScope(
+final container = ProviderContainer(
     overrides: [localCartRepoProvider.overrideWithValue(localCartRepo)],
+  );
+
+  container.read(cartSyncServiceProvider);
+  // * Entry point of the app
+  runApp(UncontrolledProviderScope(
+    container: container,
     child: MyApp(),
   ));
 }

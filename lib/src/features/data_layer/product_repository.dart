@@ -14,6 +14,9 @@ class ProductRepo {
   List<Product> getProductList() {
     return _product;
   }
+  Product? getProduct(String id) {
+    return _getProduct(_product, id);
+  }
 
   Product? findProduct(String id) {
     return _product.firstWhere((product) => product.id == id);
@@ -29,11 +32,43 @@ class ProductRepo {
     return Stream.value(_product);
   }
 
+
+
   Stream<Product?> watcProduct(String id) {
     return watchProductList().map((products)=> products.firstWhere((product) => product.id == id));
   }
+  static Product? _getProduct(List<Product> products, String id) {
+    try {
+      return products.firstWhere((product) => product.id == id);
+    } catch (e) {
+      return null;
+    }
+  }
 }
+
+//
 
 final productsRepositortProvider = Provider<ProductRepo>((ref) {
   return ProductRepo();
 });
+
+final productsListStreamProvider =
+    StreamProvider.autoDispose<List<Product>>((ref) {
+  final productsRepository = ref.watch(productsRepositortProvider);
+  return productsRepository.watchProductList();
+});
+
+final productsListFutureProvider =
+    FutureProvider.autoDispose<List<Product>>((ref) {
+  final productsRepository = ref.watch(productsRepositortProvider);
+  return productsRepository.fetchProductList();
+});
+
+final productProvider =
+    StreamProvider.autoDispose.family<Product?, String>((ref, id) {
+  final productsRepository = ref.watch(productsRepositortProvider);
+  return productsRepository.watcProduct(id);
+});
+//
+
+

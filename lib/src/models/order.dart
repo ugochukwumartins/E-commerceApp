@@ -34,7 +34,7 @@ class Order {
   final String userId;
 
   /// List of items in that order
-  final Map<String, int> items;
+  final Map<String, dynamic> items;
   final OrderStatus orderStatus;
   final DateTime orderDate;
   final double total;
