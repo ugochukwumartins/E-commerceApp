@@ -39,7 +39,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     if (userState != null) {
       setState(() {
         _subRoute == CheckoutSubRoute.payment;
-        _onSignedIn();
+        //s _onSignedIn();
       });
     }
     _controller = PageController(initialPage: _subRoute.index);
